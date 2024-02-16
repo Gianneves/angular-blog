@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-content',
@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './content.component.html',
   styleUrl: './content.component.css'
 })
-export class ContentComponent {
+export class ContentComponent implements OnInit {
 
   @Input()
   photoCover:string = ""
@@ -17,6 +17,15 @@ export class ContentComponent {
   @Input()
   contentDescription = ""
 
-  constructor() {}
+  constructor(
+    private route:ActivatedRoute
+  ) {
+    
+  }
 
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(
+      value => console.log(value.get("Id"))
+    )
+  }
 }
