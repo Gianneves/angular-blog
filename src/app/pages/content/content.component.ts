@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { dataFake } from '../../data/dataFake';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-content',
@@ -16,6 +18,7 @@ export class ContentComponent implements OnInit {
   contentTitle:string = ""
   @Input()
   contentDescription = ""
+  private id:string | null = "0"
 
   constructor(
     private route:ActivatedRoute
@@ -24,8 +27,17 @@ export class ContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(
-      value => console.log(value.get("Id"))
+    this.route.paramMap.subscribe(value =>
+      this.id = value.get("id")
     )
+    this.setValuesToComponent(this.id)
+  }
+
+  setValuesToComponent(id:string | null) {
+      const result = dataFake.filter(article => article.id)[0]
+
+       this.contentTitle = result.title
+       this.contentDescription = result.description
+       this.photoCover = result.photoCover
   }
 }
